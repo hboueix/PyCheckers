@@ -3,7 +3,7 @@ import sys
 from _thread import *
 
 def client_thread(connection_client, address_client):
-    connection_client.send("Bienvenue dans la chatroom !")
+    connection_client.send(b"Bienvenue dans la chatroom !")
 
     while True:
         try:

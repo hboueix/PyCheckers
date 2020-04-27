@@ -5,7 +5,7 @@ import select
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as connection_server:
     connection_server.connect(("164.132.225.71", 63000))
     while True:
-        socket_list = [sys.stdin, connection_server]
+        sockets_list = [sys.stdin, connection_server]
         read_sockets, write_sockets, error_sockets = select.select(sockets_list,[],[])
         for socks in read_sockets:
             if socks == connection_server:
