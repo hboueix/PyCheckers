@@ -13,7 +13,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as connection_server:
                 print(message)
             else:
                 message = sys.stdin.readline()
-                server.send(bytes(message, "utf-8"))
+                connection_server.send(bytes(message, "utf-8"))
                 sys.stdout.write("<You>") 
                 sys.stdout.write(message) 
                 sys.stdout.flush() 
