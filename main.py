@@ -3,7 +3,10 @@ import sys
 try:
     import pygame
 except:
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'pygame'])
+    try:
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'pygame'])
+    except:
+        subprocess.check_call([sys.executable, '-m', 'pip3', 'install', 'pygame'])
     import pygame
 
 pygame.init()
