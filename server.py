@@ -3,6 +3,7 @@
 
 import socket
 import select
+import sys
 
 HEADER_LENGTH = 10
 IP = "127.0.0.1"
@@ -35,46 +36,55 @@ def receive_message(client_socket):
 
 
 while True:
-    read_sockets, _, exception_sockets = select.select(
-        sockets_list, [], sockets_list)
+    try:
+        read_sockets, _, exception_sockets = select.select(
+            sockets_list, [], sockets_list
+        )
 
-    for notified_socket in read_sockets:
-        if notified_socket == server_socket:
-            client_socket, client_address = server_socket.accept()
+        for notified_socket in read_sockets:
+            if notified_socket == server_socket:
+                client_socket, client_address = server_socket.accept()
 
-            user = receive_message(client_socket)
-            if user is False:
-                continue
+                user = receive_message(client_socket)
+                if user is False:
+                    continue
 
-            sockets_list.append(client_socket)
+                sockets_list.append(client_socket)
 
-            clients[client_socket] = user
+                clients[client_socket] = user
 
-            print(
-                f"Nouvelle connection depuis {client_address[0]}:{client_address[1]} username:{user['data'].decode('utf-8')}")
-
-        else:
-            message = receive_message(notified_socket)
-
-            if message is False:
                 print(
-                    f"Connection terminée avec {clients[notified_socket]['data'].decode('utf-8')}")
-                sockets_list.remove(notified_socket)
-                del clients[notified_socket]
-                continue
+                    f"Nouvelle connection depuis {client_address[0]}:{client_address[1]} username:{user['data'].decode('utf-8')}"
+                )
 
-            user = clients[notified_socket]
-            print(
-                f"Message reçu de {user['data'].decode('utf-8')}: {message['data'].decode('utf-8')}")
+            else:
+                message = receive_message(notified_socket)
 
-            for client_socket in clients:
-                if client_socket != notified_socket:
-                    client_socket.send(
-                        user['header'] + user['data'] + message['header'] + message['data'])
+                if message is False:
+                    print(
+                        f"Connection terminée avec {clients[notified_socket]['data'].decode('utf-8')}"
+                    )
+                    sockets_list.remove(notified_socket)
+                    del clients[notified_socket]
+                    continue
 
-    for notified_socket in exception_sockets:
-        sockets_list.remove(notified_socket)
-        del clients[notified_socket]
+                user = clients[notified_socket]
+                print(
+                    f"Message reçu de {user['data'].decode('utf-8')}: {message['data'].decode('utf-8')}"
+                )
+
+                for client_socket in clients:
+                    if client_socket != notified_socket:
+                        client_socket.send(
+                            user['header'] + user['data'] + message['header'] + message['data'])
+
+        for notified_socket in exception_sockets:
+            sockets_list.remove(notified_socket)
+            del clients[notified_socket]
+
+    except KeyboardInterrupt:
+        print('\nExtinction du serveur...')
+        sys.exit()
 
 
 '''
