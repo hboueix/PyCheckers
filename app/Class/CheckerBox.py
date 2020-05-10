@@ -1,9 +1,9 @@
-from .Square import *
+from .Rectangle import *
 
 
-class Box(Square):
+class CheckerBox(Rectangle):
 
     def __init__(self, size, color, coords):
-        Square.__init__(self, size)
+        Rectangle.__init__(self, size, size)
         self.color = color
         self.coords = coords
