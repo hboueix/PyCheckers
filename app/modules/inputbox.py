@@ -4,9 +4,10 @@ COLOR_INACTIVE = pygame.Color('lightskyblue3')
 COLOR_ACTIVE = pygame.Color('dodgerblue2')
 
 
-class InputBox():
+class InputBox(pygame.sprite.Sprite):
 
     def __init__(self, x, y, w, h, text='> '):
+        super().__init__()
         self.rect = pygame.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
         self.text = text

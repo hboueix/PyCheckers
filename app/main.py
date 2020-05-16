@@ -1,64 +1,72 @@
 import pygame
-import sys
-import os
-from Class.Window import *
-from Class.Checkerboard import *
-from Class.InputBox import *
-from Class.OutputBox import *
-
-# Get real path and real directory
-realpath = os.path.realpath(__file__)
-realdir = os.path.dirname(realpath)
+#import os
+from modules.menu import Menu
+from modules.game import Game
 
 pygame.init()
 
-clock = pygame.time.Clock()
+# Get real path and real directory
+#realpath = os.path.realpath(__file__)
+#realdir = os.path.dirname(realpath)
 
-# Init objects
-win = Window(880, 60 * 8).open()
-
-checkerboard = Checkerboard(0, 0, 60 * 8)
-
-inputbox = InputBox(60 * 8, 440, 400, 40)
-
-outputbox = OutputBox(60 * 8, 0, 400, 440)
-
-# Set title and icon
+# Set title and init game window with icon
 pygame.display.set_caption("PyCheckers")
-image = pygame.image.load(realdir + "/img/icon.png").convert()
-pygame.display.set_icon(image)
+
+screen = pygame.display.set_mode((1080, 720))
+
+icon = pygame.image.load("app/assets/icon.png").convert()
+pygame.display.set_icon(icon)
+
+# Create main menu
+main_menu = Menu()
+
+# Create a game
+game = Game()
+
+# Not playing so main page
+is_playing = False
 
 # Game loop
-CONTINUE = True
-try:
-    while CONTINUE:
-        # Handle event
-        for event in pygame.event.get():
+running = True
+input_text = ''
+while running:
 
-            if event.type == pygame.QUIT:
-                CONTINUE = False
+    if is_playing:
+        # Apply background color
+        screen.fill((30, 30, 30))
 
-            input_text = inputbox.handle_event(event)
+        # Draw checkerboard
+        game.checkerboard.draw(screen)
 
-        # Update objects
-        win.fill((30, 30, 30))
-
-        checkerboard.load(win)
-        inputbox.draw(win)
-
-        outputbox.draw(win)
+        # Draw chat
+        game.inputbox.draw(screen)
+        game.outputbox.draw(screen)
         if input_text != '':
-            outputbox.blit_text(win, 'user> ' + input_text)
+            game.outputbox.blit_text(screen, 'user> ' + input_text)
+            input_text = ''
         else:
-            outputbox.blit_text(win, outputbox.text)
-        input_text = ''
+            game.outputbox.blit_text(screen, game.outputbox.text)
+    else:
+        # Apply background & logo
+        screen.blit(main_menu.background, (0, -110))
+        screen.blit(main_menu.logo, (540 - (main_menu.logo.get_rect().w / 2), 60))
+        # Draw buttons
+        for option in main_menu.options:
+            option.set_hovered()
+            option.draw(screen)
 
-        # Update display
-        pygame.display.flip()
-        clock.tick(30)
+    # Update screen
+    pygame.display.flip()
 
-
-except KeyboardInterrupt:
-    print('\nExit application...')
-
-pygame.quit()
+    for event in pygame.event.get():
+        # Catch input
+        input_text = game.inputbox.handle_event(event)
+        # Start new game event
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            for option in main_menu.options:
+                if option.hovered and option.text == "NEW GAME":
+                    is_playing = True
+        # Close window event
+        if event.type == pygame.QUIT:
+            running = False
+            pygame.quit()

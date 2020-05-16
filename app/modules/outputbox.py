@@ -1,9 +1,10 @@
 import pygame
 
 
-class OutputBox:
+class OutputBox(pygame.sprite.Sprite):
 
     def __init__(self, x, y, w, h, text='Bienvenue !'):
+        super().__init__()
         self.rect = pygame.Rect(x, y, w, h)
         self.color = pygame.Color('lightskyblue3')
         self.text = text
