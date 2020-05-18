@@ -48,6 +48,13 @@ class Checkerboard(pygame.sprite.Sprite):
                 if box.hovered:
                     return box.rect.x, box.rect.y
 
+    def get_all_box(self):
+        all_box = []
+        for line in self.boxes:
+            for box in line:
+                all_box.append(box)
+        return all_box
+
     def get_all_box_xy(self):
         all_pos = []
         for line in self.boxes:

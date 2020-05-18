@@ -1,3 +1,4 @@
+import pygame
 from modules.checkerboard import Checkerboard
 from modules.inputbox import InputBox
 from modules.outputbox import OutputBox
@@ -32,6 +33,10 @@ class Game:
         for piece in self.player1.checkerpieces:
             piece.set_hovered()
             piece.draw(screen)
+            if piece.is_selected:
+                for move in piece.valid_moves:
+                    pygame.draw.rect(screen, [0, 255, 0], (move[0] + 10, move[1] + 10, 65, 65), 5)
+        # Draw player 2 pieces
         for piece in self.opponent.checkerpieces:
             piece.draw(screen)
 

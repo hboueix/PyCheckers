@@ -1,5 +1,6 @@
 import pygame
 #import os
+from modules.helpers import *
 from modules.menu import Menu
 from modules.game import Game
 
@@ -57,12 +58,15 @@ while running:
             for piece in game.player1.checkerpieces:
                 if piece.is_selected:
                     target = game.checkerboard.get_hovered()
-                    # Target not on another piece
-                    if target not in game.player1.get_all_piece_xy() and target not in game.opponent.get_all_piece_xy():
-                        # Target on diagonal
-                        if target[0] != piece.rect.x and target[1] != piece.rect.y:
-                            piece.move(target)
+                    valid_moves = get_valid_moves(piece, game.player1.get_all_piece_xy(), game.opponent.get_all_piece_xy(), game.checkerboard)
+                    if target in valid_moves:
+                        piece.move(target)
                 piece.set_selected()
+                if piece.is_selected:
+                    valid_moves = get_valid_moves(piece, game.player1.get_all_piece_xy(), game.opponent.get_all_piece_xy(),
+                                              game.checkerboard)
+                    piece.valid_moves = valid_moves
+
 
         # Close window event
         if event.type == pygame.QUIT:
