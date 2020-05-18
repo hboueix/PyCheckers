@@ -19,6 +19,9 @@ class Checkerpiece(pygame.sprite.Sprite):
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
+    def move(self, pos):
+        self.rect.x, self.rect.y = pos
+
     def set_hovered(self):
         if self.rect.collidepoint(pygame.mouse.get_pos()):
             self.hovered = True

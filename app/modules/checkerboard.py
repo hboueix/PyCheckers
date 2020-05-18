@@ -39,4 +39,11 @@ class Checkerboard(pygame.sprite.Sprite):
     def draw(self, screen):
         for line in self.boxes:
             for box in line:
+                box.set_hovered()
                 box.draw(screen)
+
+    def get_hovered(self):
+        for line in self.boxes:
+            for box in line:
+                if box.hovered:
+                    return box.rect.x, box.rect.y

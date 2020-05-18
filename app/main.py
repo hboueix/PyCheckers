@@ -55,7 +55,10 @@ while running:
                 if option.hovered and option.text == "NEW GAME":
                     game.is_playing = True
             for piece in game.player1.checkerpieces:
+                if piece.is_selected:
+                    piece.move(game.checkerboard.get_hovered())
                 piece.set_selected()
+
         # Close window event
         if event.type == pygame.QUIT:
             running = False
