@@ -33,8 +33,7 @@ while running:
     if game.is_playing:
         # Update game screen
         game.update(screen, input_text)
-        if input_text != '':
-            input_text = ''
+        input_text = ''
     else:
         # Apply background & logo
         screen.blit(main_menu.background, (0, -110))
@@ -55,6 +54,8 @@ while running:
             for option in main_menu.options:
                 if option.hovered and option.text == "NEW GAME":
                     game.is_playing = True
+            for piece in game.player1.checkerpieces:
+                piece.set_selected()
         # Close window event
         if event.type == pygame.QUIT:
             running = False

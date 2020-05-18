@@ -30,6 +30,7 @@ class Game:
 
         # Draw player1 pieces
         for piece in self.player1.checkerpieces:
+            piece.set_hovered()
             piece.draw(screen)
         for piece in self.opponent.checkerpieces:
             piece.draw(screen)
