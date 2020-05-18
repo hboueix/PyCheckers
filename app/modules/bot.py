@@ -1,7 +1,8 @@
+from modules.player import Player
 from modules.checkerpiece import Checkerpiece
 
 
-class Bot:
+class Bot(Player):
 
     def __init__(self, color):
         self.color = color

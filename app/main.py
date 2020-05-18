@@ -56,7 +56,12 @@ while running:
                     game.is_playing = True
             for piece in game.player1.checkerpieces:
                 if piece.is_selected:
-                    piece.move(game.checkerboard.get_hovered())
+                    target = game.checkerboard.get_hovered()
+                    # Target not on another piece
+                    if target not in game.player1.get_all_piece_xy() and target not in game.opponent.get_all_piece_xy():
+                        # Target on diagonal
+                        if target[0] != piece.rect.x and target[1] != piece.rect.y:
+                            piece.move(target)
                 piece.set_selected()
 
         # Close window event
