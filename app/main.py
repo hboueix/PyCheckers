@@ -24,28 +24,17 @@ main_menu = Menu()
 game = Game()
 
 # Not playing so main page
-is_playing = False
 
 # Game loop
 running = True
 input_text = ''
 while running:
 
-    if is_playing:
-        # Apply background color
-        screen.fill((30, 30, 30))
-
-        # Draw checkerboard
-        game.checkerboard.draw(screen)
-
-        # Draw chat
-        game.inputbox.draw(screen)
-        game.outputbox.draw(screen)
+    if game.is_playing:
+        # Update game screen
+        game.update(screen, input_text)
         if input_text != '':
-            game.outputbox.blit_text(screen, 'user> ' + input_text)
             input_text = ''
-        else:
-            game.outputbox.blit_text(screen, game.outputbox.text)
     else:
         # Apply background & logo
         screen.blit(main_menu.background, (0, -110))
@@ -65,7 +54,7 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             for option in main_menu.options:
                 if option.hovered and option.text == "NEW GAME":
-                    is_playing = True
+                    game.is_playing = True
         # Close window event
         if event.type == pygame.QUIT:
             running = False
