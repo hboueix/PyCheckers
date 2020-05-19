@@ -1,3 +1,4 @@
+import pygame
 from modules.player import Player
 from modules.checkerpiece import Checkerpiece
 
@@ -5,10 +6,9 @@ from modules.checkerpiece import Checkerpiece
 class Bot(Player):
 
     def __init__(self, color):
-        self.color = color
-        start_pos = []
-        for j in range(0, 3):
-            for i in range(8):
-                if (i % 2 == 0 and j % 2 != 0) or (i % 2 != 0 and j % 2 == 0):
-                    start_pos.append((i * 85, 40 + j * 85))
-        self.checkerpieces = [Checkerpiece(color, pos) for pos in start_pos]
+        super().__init__(2, color)
+        start_pos = self.get_start_pos(self.tag_player)
+        checkerpieces = [Checkerpiece(color, pos) for pos in start_pos]
+        self.checkerpieces = pygame.sprite.Group()
+        for piece in checkerpieces:
+            self.checkerpieces.add(piece)

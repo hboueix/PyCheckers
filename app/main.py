@@ -52,10 +52,12 @@ while running:
         input_text = game.inputbox.handle_event(event)
         # Start new game event
         if event.type == pygame.MOUSEBUTTONDOWN:
+            # If button clic on main menu
             if not game.is_playing:
                 for option in main_menu.options:
                     if option.hovered and option.text == "NEW GAME":
                         game.is_playing = True
+            # User trying to move piece
             else:
                 for piece in game.player1.checkerpieces:
                     if piece.is_selected:
@@ -68,6 +70,7 @@ while running:
                         valid_moves = get_valid_moves(piece, game.player1.get_all_piece_xy(), game.opponent.get_all_piece_xy(),
                                                   game.checkerboard)
                         piece.valid_moves = valid_moves
+        # If return is pressed on main menu
         if event.type == pygame.KEYDOWN and not game.is_playing:
             if event.key == pygame.K_RETURN:
                 game.is_playing = True

@@ -15,7 +15,7 @@ class Game:
         self.checkerboard = Checkerboard()
         self.outputbox = OutputBox(self.checkerboard.rect.w, 0, 400, 680)
         self.inputbox = InputBox(self.checkerboard.rect.w, self.outputbox.rect.h, 400, 40)
-        self.player1 = Player('white')
+        self.player1 = Player(1, 'white')
         self.opponent = Bot('black')
 
     def update(self, screen, input_text):
