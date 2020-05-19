@@ -1,6 +1,6 @@
 import pygame
 #import os
-from modules.helpers import *
+from modules.helpers import get_valid_moves
 from modules.menu import Menu
 from modules.game import Game
 
@@ -58,18 +58,30 @@ while running:
                     if option.hovered and option.text == "NEW GAME":
                         game.is_playing = True
             # User trying to move piece
-            else:
+            elif game.player1.his_turn:
+                player1_pieces = game.player1.get_all_piece_xy()
+                player2_pieces = game.player2.get_all_piece_xy()
                 for piece in game.player1.checkerpieces:
                     if piece.is_selected:
                         target = game.checkerboard.get_hovered()
-                        valid_moves = get_valid_moves(piece, game.player1.get_all_piece_xy(), game.opponent.get_all_piece_xy(), game.checkerboard)
+                        valid_moves = get_valid_moves(piece, player1_pieces, player2_pieces, game.checkerboard)
                         if target in valid_moves:
                             piece.move(target)
+                            game.player1.his_turn = False
+                            game.player2.his_turn = True
                     piece.set_selected()
                     if piece.is_selected:
-                        valid_moves = get_valid_moves(piece, game.player1.get_all_piece_xy(), game.opponent.get_all_piece_xy(),
-                                                  game.checkerboard)
+                        valid_moves = get_valid_moves(piece, player1_pieces, player2_pieces, game.checkerboard)
                         piece.valid_moves = valid_moves
+            if game.player2.his_turn:
+                player1_pieces = game.player1.get_all_piece_xy()
+                player2_pieces = game.player2.get_all_piece_xy()
+                for piece in game.player2.checkerpieces:
+                    piece.valid_moves = get_valid_moves(piece, player1_pieces, player2_pieces, game.checkerboard)
+                game.player2.random_move()
+                game.player1.his_turn = True
+                game.player2.his_turn = False
+
         # If return is pressed on main menu
         if event.type == pygame.KEYDOWN and not game.is_playing:
             if event.key == pygame.K_RETURN:

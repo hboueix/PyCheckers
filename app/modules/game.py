@@ -15,8 +15,8 @@ class Game:
         self.checkerboard = Checkerboard()
         self.outputbox = OutputBox(self.checkerboard.rect.w, 0, 400, 680)
         self.inputbox = InputBox(self.checkerboard.rect.w, self.outputbox.rect.h, 400, 40)
-        self.player1 = Player(1, 'white')
-        self.opponent = Bot('black')
+        self.player1 = Player('white', True)
+        self.player2 = Bot('black')
 
     def update(self, screen, input_text):
         # Apply background color
@@ -37,7 +37,7 @@ class Game:
                 for move in piece.valid_moves:
                     pygame.draw.rect(screen, [0, 255, 0], (move[0] + 10, move[1] + 10, 65, 65), 5)
         # Draw player 2 pieces
-        for piece in self.opponent.checkerpieces:
+        for piece in self.player2.checkerpieces:
             piece.draw(screen)
 
         if input_text != '':

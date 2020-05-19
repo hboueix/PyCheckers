@@ -3,14 +3,16 @@ from modules.checkerpiece import Checkerpiece
 
 class Player:
 
-    def __init__(self, tag_player, color):
-        self.tag_player = tag_player
+    def __init__(self, color, current_user=False):
+        self.current_user = current_user
         self.color = color
+        self.tag_player = 1 if color == 'white' else 2
         start_pos = self.get_start_pos(self.tag_player)
         checkerpieces = [Checkerpiece(color, pos) for pos in start_pos]
         self.checkerpieces = pygame.sprite.Group()
         for piece in checkerpieces:
             self.checkerpieces.add(piece)
+        self.his_turn = True if self.tag_player == 1 else False
 
     def get_start_pos(self, tag_player):
         if tag_player == 1:
