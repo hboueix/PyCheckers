@@ -1,1 +1,3 @@
 pygame
+mysql
+mysql-connector-python-rf

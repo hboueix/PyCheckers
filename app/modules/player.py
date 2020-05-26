@@ -7,20 +7,18 @@ class Player:
         self.current_user = current_user
         self.color = color
         self.tag_player = 1 if color == 'white' else 2
-        start_pos = self.get_start_pos(self.tag_player)
+        start_pos = self.get_start_pos()
         checkerpieces = [Checkerpiece(color, pos) for pos in start_pos]
         self.checkerpieces = pygame.sprite.Group()
         for piece in checkerpieces:
             self.checkerpieces.add(piece)
         self.his_turn = True if self.tag_player == 1 else False
 
-    def get_start_pos(self, tag_player):
-        if tag_player == 1:
+    def get_start_pos(self):
+        if self.current_user:
             n, m = 5, 8
-        elif tag_player == 2:
-            n, m = 0, 3
         else:
-            raise Exception("L'argument tag_player doit être un entier 1 ou 2")
+            n, m = 0, 3
         start_pos = []
         for j in range(n, m):
             for i in range(8):

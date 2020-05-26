@@ -9,7 +9,7 @@ class Bot(Player):
 
     def __init__(self, color):
         super().__init__(color)
-        start_pos = self.get_start_pos(self.tag_player)
+        start_pos = self.get_start_pos()
         checkerpieces = [Checkerpiece(color, pos) for pos in start_pos]
         self.checkerpieces = pygame.sprite.Group()
         for piece in checkerpieces:
@@ -20,6 +20,7 @@ class Bot(Player):
         random.shuffle(checkerpieces)
         for piece in checkerpieces:
             if piece.valid_moves:
+                print(piece.valid_moves)
                 for move in random.sample(piece.valid_moves, len(piece.valid_moves)):
                     piece.move(move)
                     return

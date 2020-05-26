@@ -12,9 +12,9 @@ class Button(pygame.sprite.Sprite):
         self.set_rect()
         #self.draw()
 
-    def draw(self, screen):
+    def draw(self, screen, bg=(255, 255, 255)):
         self.set_rend()
-        pygame.draw.rect(screen, (255, 255, 255),
+        pygame.draw.rect(screen, bg,
                          (self.rect.x - 20, self.rect.y - 20, self.rect.w + 40, self.rect.h + 35)
                         )
         screen.blit(self.rend, self.rect)
@@ -31,7 +31,8 @@ class Button(pygame.sprite.Sprite):
     def set_rect(self):
         self.set_rend()
         self.rect = self.rend.get_rect()
-        self.rect.topleft = self.pos
+        self.rect.centerx = self.pos[0]
+        self.rect.y = self.pos[1]
 
     def set_hovered(self):
         if self.rect.collidepoint(pygame.mouse.get_pos()):

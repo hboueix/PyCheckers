@@ -27,3 +27,12 @@ Objectif pour la journée (équipe/groupe) :
 Objectif pour la prochaine fois (équipe/groupe) :
 
 - Monter un serveur fonctionnel qui utilise les sockets
+
+## Fix pip install mysql
+```bash
+# MySQL
+sudo apt-get install libmysqlclient-dev
+
+# MariaDB
+sudo apt-get install libmariadbclient-dev
+```

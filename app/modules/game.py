@@ -15,8 +15,7 @@ class Game:
         self.checkerboard = Checkerboard()
         self.outputbox = OutputBox(self.checkerboard.rect.w, 0, 400, 680)
         self.inputbox = InputBox(self.checkerboard.rect.w, self.outputbox.rect.h, 400, 40)
-        self.player1 = Player('white', True)
-        self.player2 = Bot('black')
+        self.with_bot = False
 
     def update(self, screen, input_text):
         # Apply background color
@@ -38,11 +37,32 @@ class Game:
                     pygame.draw.rect(screen, [0, 255, 0], (move[0] + 10, move[1] + 10, 65, 65), 5)
         # Draw player 2 pieces
         for piece in self.player2.checkerpieces:
+            piece.set_hovered()
             piece.draw(screen)
+            if piece.is_selected:
+                for move in piece.valid_moves:
+                    pygame.draw.rect(screen, [0, 255, 0], (move[0] + 10, move[1] + 10, 65, 65), 5)
+
+        header = 'user> '
+        if hasattr(self, "user"):
+            self.user.run_connection(input_text)
+            if self.user.recv_text != '':
+                input_text = self.user.recv_text + input_text
+            elif input_text != '':
+                input_text = f"{self.user.username}> {input_text}"
+            self.user.recv_text = ''
 
         if input_text != '':
-            self.outputbox.blit_text(screen, 'user> ' + input_text)
+            if not hasattr(self, "user"):
+                input_text = header + input_text
+            self.outputbox.blit_text(screen, input_text)
         else:
             self.outputbox.blit_text(screen, self.outputbox.text)
 
-
+    def set_players(self, color_current_user):
+        self.player1 = Player(color_current_user, True)
+        color_player2 = 'white' if color_current_user == 'black' else 'black'
+        if not self.with_bot:
+            self.player2 = Player(color_player2)
+        else:
+            self.player2 = Bot(color_player2)

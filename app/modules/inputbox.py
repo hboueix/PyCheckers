@@ -6,7 +6,7 @@ COLOR_ACTIVE = pygame.Color('dodgerblue2')
 
 class InputBox(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, w, h, text='> '):
+    def __init__(self, x, y, w, h, text=''):
         super().__init__()
         self.rect = pygame.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
@@ -29,10 +29,10 @@ class InputBox(pygame.sprite.Sprite):
         if event.type == pygame.KEYDOWN:
             if self.active:
                 if event.key == pygame.K_RETURN:
-                    input_text = self.text[2:]
-                    self.text = '> '
+                    input_text = self.text
+                    self.text = ''
                 elif event.key == pygame.K_BACKSPACE:
-                    if len(self.text) > 2:
+                    if len(self.text) > 0:
                         self.text = self.text[:-1]
                 elif self.txt_surface.get_width()+20 < self.rect.w:
                     self.text += event.unicode
