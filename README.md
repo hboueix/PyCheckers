@@ -18,15 +18,8 @@ Techno utilisées :
 - Python
 - module pygame
 - module socket
+- mysql
 
-Objectif pour la journée (équipe/groupe) :
-
-- Se renseigner sur les différentes librairies Python possibles
-- Discuter des fonctionnalités à mettre en place
-
-Objectif pour la prochaine fois (équipe/groupe) :
-
-- Monter un serveur fonctionnel qui utilise les sockets
 
 ## Fix pip install mysql 
 
@@ -42,3 +35,21 @@ sudo apt-get install libmariadbclient-dev
 Windows :
 Il faut télécharger le 'mysql python connector' :
 https://dev.mysql.com/downloads/connector/python/
+
+## L'application :
+
+menu principal :
+
+![Screenshot](app/assets/Capture1.png) 
+
+Login/Register :
+
+![Screenshot](app/assets/Capture2.png) 
+
+Choix de la couleur :
+
+![Screenshot](app/assets/Capture3.png) 
+
+Jeux :
+
+![Screenshot](app/assets/Capture4.png) 
