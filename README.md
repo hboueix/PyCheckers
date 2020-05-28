@@ -40,11 +40,11 @@ https://dev.mysql.com/downloads/connector/python/
 
 menu principal :
 
-![Screenshot1](app/assets/Capture 1.PNG) 
+![Screenshot1](app/assets/capture1.PNG) 
 
 Login/Register :
 
-![Screenshot](app/assets/Capture 2.png) 
+![Screenshot](app/assets/capture2.png) 
 
 Choix de la couleur :
 
