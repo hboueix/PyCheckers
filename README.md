@@ -40,7 +40,7 @@ https://dev.mysql.com/downloads/connector/python/
 
 menu principal :
 
-![Screenshot](app/assets/Capture1.png) 
+![Screenshot1](app/assets/Capture1.PNG) 
 
 Login/Register :
 
