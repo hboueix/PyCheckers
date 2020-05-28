@@ -23,4 +23,4 @@ class Bot(Player):
                 print(piece.valid_moves)
                 for move in random.sample(piece.valid_moves, len(piece.valid_moves)):
                     piece.move(move)
-                    return
+                    return move

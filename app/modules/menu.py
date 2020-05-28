@@ -34,6 +34,7 @@ class Menu:
         self.inputboxes = pygame.sprite.Group()
 
     def login_register(self):
+        self.inputboxes = pygame.sprite.Group()
         self.options = [Button("Login", (270, 500)), Button("Register", (810, 500)), Button("BACK", (100, 650))]
         self.input_username = InputBox(440, 300, 200, 40, 'Username')
         self.input_password = InputBox(440, 380, 200, 40, 'Password')

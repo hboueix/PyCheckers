@@ -7,6 +7,8 @@ def get_valid_moves(piece, player1, player2, checkerboard):
     :param piece, my_pieces, opponent_pieces, checkerboard: all tuples or tuples[]
     :return: a list of x, y valid moves
     '''
+    player1.attack_moves = {}
+    player2.attack_moves = {}
     player1_pieces = player1.get_all_piece_xy()
     player2_pieces = player2.get_all_piece_xy()
     player = 1 if piece.color == player1.checkerpieces.sprites()[0].color else 2
@@ -38,13 +40,16 @@ def get_valid_moves(piece, player1, player2, checkerboard):
                             if player == 1:
                                 if (piece.rect.x + (pos[0] - piece.rect.x) / 2, piece.rect.y + (pos[1] - piece.rect.y) / 2) in player2_pieces:
                                     VALID = True
+                                    player1.attack_moves[(pos[0],pos[1])] = (int(piece.rect.x + (pos[0] - piece.rect.x) / 2), int(piece.rect.y + (pos[1] - piece.rect.y) / 2))
                             else:
                                 if (piece.rect.x + (pos[0] - piece.rect.x) / 2, piece.rect.y + (pos[1] - piece.rect.y) / 2) in player1_pieces:
                                     VALID = True
+                                    player2.attack_moves[(pos[0],pos[1])] = (int(piece.rect.x + (pos[0] - piece.rect.x) / 2), int(piece.rect.y + (pos[1] - piece.rect.y) / 2))
         if VALID:
             valid_moves.append(pos)
 
         i += 1
+    print(player1.attack_moves)
     return valid_moves
 
 

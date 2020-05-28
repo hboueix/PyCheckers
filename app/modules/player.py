@@ -14,6 +14,12 @@ class Player:
             self.checkerpieces.add(piece)
         self.his_turn = True if self.tag_player == 1 else False
 
+    def lose_piece(self, pos):
+        for piece in self.checkerpieces:
+            if (piece.rect.x, piece.rect.y) == pos:
+                self.checkerpieces.remove(piece)
+                print(f"remove piece at pos {pos}")
+
     def get_start_pos(self):
         if self.current_user:
             n, m = 5, 8

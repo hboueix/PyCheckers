@@ -75,14 +75,18 @@ while running:
                         elif option.text == "Login":
                             if check_login(menu.input_username.text, menu.input_password.text):
                                 game.user = User(menu.input_username.text)
-                            game.set_players('white')
-                            game.is_playing = True
+                                game.set_players('white')
+                                game.is_playing = True
+                            else:
+                                menu.login_register()
                         elif option.text == "Register":
                             if check_register(menu.input_username.text):
                                 register(menu.input_username.text, menu.input_password.text)
                                 game.user = User(menu.input_username.text)
-                            game.set_players('white')
-                            game.is_playing = True
+                                game.set_players('white')
+                                game.is_playing = True
+                            else:
+                                menu.login_register()
             # User trying to move piece
             elif game.player1.his_turn:
                 for piece in game.player1.checkerpieces:
@@ -91,6 +95,8 @@ while running:
                         valid_moves = get_valid_moves(piece, game.player1, game.player2, game.checkerboard)
                         if target in valid_moves:
                             piece.move(target)
+                            if target in game.player1.attack_moves:
+                                game.player2.lose_piece(game.player1.attack_moves[target])
                             if game.with_bot:
                                 game.player1.his_turn = False
                                 game.player2.his_turn = True
@@ -99,7 +105,9 @@ while running:
                                                                             game.player1,
                                                                             game.player2,
                                                                             game.checkerboard)
-                                game.player2.random_move()
+                                bot_move = game.player2.random_move()
+                                if bot_move in game.player2.attack_moves:
+                                    game.player1.lose_piece(game.player2.attack_moves[bot_move])
                                 game.player1.his_turn = True
                                 game.player2.his_turn = False
                             else:
@@ -110,18 +118,32 @@ while running:
                         valid_moves = get_valid_moves(piece, game.player1, game.player2, game.checkerboard)
                         piece.valid_moves = valid_moves
             elif game.player2.his_turn:
-                for piece in game.player2.checkerpieces:
-                    if piece.is_selected:
-                        target = game.checkerboard.get_hovered()
-                        valid_moves = get_valid_moves(piece, game.player1, game.player2, game.checkerboard)
-                        if target in valid_moves:
-                            piece.move(target)
-                            game.player1.his_turn = True
-                            game.player2.his_turn = False
-                    piece.set_selected()
-                    if piece.is_selected:
-                        valid_moves = get_valid_moves(piece, game.player1, game.player2, game.checkerboard)
-                        piece.valid_moves = get_valid_moves(piece, game.player1, game.player2, game.checkerboard)
+                if game.with_bot:
+                    for piece_bot in game.player2.checkerpieces:
+                        piece_bot.valid_moves = get_valid_moves(piece_bot,
+                                                                game.player1,
+                                                                game.player2,
+                                                                game.checkerboard)
+                    bot_move = game.player2.random_move()
+                    if bot_move in game.player2.attack_moves:
+                        game.player1.lose_piece(game.player2.attack_moves[bot_move])
+                    game.player1.his_turn = True
+                    game.player2.his_turn = False
+                else:
+                    for piece in game.player2.checkerpieces:
+                        if piece.is_selected:
+                            target = game.checkerboard.get_hovered()
+                            valid_moves = get_valid_moves(piece, game.player1, game.player2, game.checkerboard)
+                            if target in valid_moves:
+                                piece.move(target)
+                                if target in game.player1.attack_moves:
+                                    game.player2.lose_piece(game.player1.attack_moves[target])
+                                game.player1.his_turn = True
+                                game.player2.his_turn = False
+                        piece.set_selected()
+                        if piece.is_selected:
+                            valid_moves = get_valid_moves(piece, game.player1, game.player2, game.checkerboard)
+                            piece.valid_moves = get_valid_moves(piece, game.player1, game.player2, game.checkerboard)
 
 
         '''
