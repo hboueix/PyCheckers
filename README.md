@@ -44,12 +44,12 @@ menu principal :
 
 Login/Register :
 
-![Screenshot](app/assets/capture2.png) 
+![Screenshot](app/assets/capture2.PNG) 
 
 Choix de la couleur :
 
-![Screenshot](app/assets/Capture3.png) 
+![Screenshot](app/assets/Capture3.PNG) 
 
 Jeux :
 
-![Screenshot](app/assets/Capture4.png) 
+![Screenshot](app/assets/Capture4.PNG) 
