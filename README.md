@@ -1,29 +1,24 @@
 # PyCheckers
-Jeu de dames developpé en Python
+Jeu de dames developpé en Python. Vous trouverez dans le fichier `documentation.pdf` des screens ainsi que le graphe UML de l'application.
 
-## Petite présentation
+## Prérequis
 
-Présenter le projet:
+Il faut faut bien sûr Python (3.6+) installé sur votre machine.
 
-PyCheckers est un jeu de dames en developpé en Python, on peut jouer contre une IA ou un joueur et comparer ses scores avec les autres joueurs.
+## Installation
 
-Les fonctionnalités sans les détails :
+Il faut commencer par cloner ce dépôt bien sûr.  
+Puis à la racine du dossier, tapez la commande:
+```bash
+make
 
-- Jouer contre l'IA
-- Jouer contre un joueur
-- Comparer ses scores
+# Si make n'est pas installé
+pip install -r requirements.txt
+```
 
-Techno utilisées :
+Si vous avez des problèmes pour l'installation du package `mysql-connector-python-rf`, vérifiez déjà que vous avez bien MySQL ou MariaDB d'installé puis :
 
-- Python
-- module pygame
-- module socket
-- mysql
-
-
-## Fix pip install mysql 
-
-linux :
+Linux Debian/Ubuntu :
 ```bash
 # MySQL
 sudo apt-get install libmysqlclient-dev
@@ -32,24 +27,13 @@ sudo apt-get install libmysqlclient-dev
 sudo apt-get install libmariadbclient-dev
 ```
 
-Windows :
+Windows :  
 Il faut télécharger le 'mysql python connector' :
 https://dev.mysql.com/downloads/connector/python/
 
-## L'application :
+## Utilisation
 
-menu principal :
-
-![Screenshot1](app/assets/capture1.PNG) 
-
-Login/Register :
-
-![Screenshot](app/assets/capture2.PNG) 
-
-Choix de la couleur :
-
-![Screenshot](app/assets/Capture3.PNG) 
-
-Jeux :
-
-![Screenshot](app/assets/Capture4.PNG) 
+Vous pouvez désormais lancer le jeu. Pour ce faire, rendez-vous à la racine du dossier et lancez le jeu avec la commande :
+```bash
+python app/main.py
+```
